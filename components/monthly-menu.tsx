@@ -18,23 +18,38 @@ type MenuData = {
 
 // This would typically come from an API or database
 const sampleMenuData: MenuData = {
-  "2025-02": {
-    "2025-02-01": {
-      Breakfast: "Idli, Sambar",
-      Lunch: "Rice, Dal, Vegetable Curry",
-      Dinner: "Chapati, Paneer Butter Masala",
+ "2025-02": {
+    "2025-02-26": {
+      Breakfast: "Onion Masala Dosa, Coconut Chutney, Sambar, Toasted Bread, Butter, Jam, Coffee, Tea, Milk, NV-Egg Bhurji",
+      Lunch: "Chapathi, Chicken Hyderabadi Style (Semi Gravy) / Paneer 65, Bottlegourd Kurma, Jeera Pulao, White Rice, Rasam, Pickle, Salad (Cucumber, Lemon), Onion Raita, Sprouts, Semiya Payasam",
+      Snacks: "Bread Pakoda, Chutney, Tea, Coffee",
+      Dinner: "Phulka, Dal Tadka, Rice, Aloevera Capsicum Curry, Mix Veg Curry, Raita, White Rice, Rasam, Pickle, Seasonal Fruit"
     },
-    // ... more days
-  },
-  "2025-01": {
-    "2025-01-01": {
-      Breakfast: "Dosa, Chutney",
-      Lunch: "Rice, Sambar, Potato Fry",
-      Dinner: "Pulao, Raita",
+    "2025-02-27": {
+      Breakfast: "Poha, Masala Upma, Coconut Chutney, Sambar, Toasted Bread, Butter, Jam, Coffee, Tea, Milk, NV-Omelette",
+      Lunch: "Phulka, Palak Dal, Butter Beans Kara Koottu, Papad, Podi Dosa, Rasam, Tomato Dal, Salad (Carrot, Raddish, Beetroot), Cabbage Channa Curry",
+      Snacks: "Fresh Baked Bun, Tomato Ketchup, Tea, Coffee",
+      Dinner: "Phulka, Tomato Dal, Idli, Sambar, Groundnut Chutney, Rasam, Curd, Pickle, Seasonal Fruit"
     },
-    // ... more days
-  },
-  // ... more months
+    "2025-02-28": {
+      Breakfast: "Vada Pav, Masala Upma, Fried Green Chilli, Coconut Chutney, Pickle, Bread, Butter, Jam, Coffee, Tea, Milk, NV-Boiled Egg",
+      Lunch: "Chapathi, Beans Poriyal, Bessibella Bath, Rajma Masala, Potato Chips, White Rice, Tomato Rasam, Pickle, Curd Vadai, Salad (Sprouts, Onion), Lemon Juice, Rabadi",
+      Snacks: "Bhaji Pav, Green Chutney, Tomato Chutney, Tea, Coffee",
+      Dinner: "Phulka, Rasam, White Rice, Mix Veg Manchurian (Semi Dry), Chana Dal Fry, Pickle, Roti, Salad, Curd, Seasonal Fruit"
+    },
+    "2025-02-03": {
+      Breakfast: "Chole Bhatura, Pongal with coconut chutney, Toasted Bread with Butter and Jam, Tea, Coffee, Milk, NV-Egg Burji",
+      Lunch: "Phulka, Chana Masala, Palak Dal, Tomato Rice, White Rice, Papad, Beetroot Poriyal, Rasam, Fresh Coriander Chutney, Salad (Cucumber, Onion, Carrot), Butter Milk",
+      Snacks: "Veg Roll with tomato sauce, Tea, Coffee",
+      Dinner: "Paneer Butter Masala, Gravy Chicken, Rice, Rasam, Dal, Phulka, Cutlet, Salad, Curd, Seasonal Fruit"
+    },
+    "2025-02-04": {
+      Breakfast: "Aloo Bonda, Green Chutney, Mint Masala Dosa, Sambar, Coffee, Tea, Milk, Bread, Butter, Jam, NV-Boiled Egg",
+      Lunch: "Chapathi, Bessibella Bath, Rajma Masala, Potato Chips, Thattari Channa, White Rice, Tomato Rasam, Pickle, Carrot and Beans Poriyal, Curd Vadai, Salad (Beetroot & Cucumber), Lemon Juice, Gulab Jamun",
+      Snacks: "Veg Cutlet (2 pcs) with tomato sauce & Ketchup, Tea, Coffee",
+      Dinner: "Phulka, Mushroom Biryani, Veg Kurma, Baby Corn Masala, Rice, Dal Fry, Rasam, Sambar, Tomato Dal, Raita, Cucumber Salad, Pickle, Seasonal Fruit"
+    }
+  }
 }
 
 export function MonthlyMenu() {
