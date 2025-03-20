@@ -237,7 +237,7 @@ export default function Nutrition() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">Nutrition Tracking</h1>
-        <Button>Get AI Insights</Button>
+        <Button onClick={() => window.location.href = "https://symphonious-eclair-35c99f.netlify.app/"}>Get AI Insights with Mess++ AI</Button>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
