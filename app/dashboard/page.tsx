@@ -6,31 +6,53 @@ import { Button } from "@/components/ui/button"
 import { Star } from "lucide-react"
 import { MonthlyMenu } from "@/components/monthly-menu"
 
+type User = {
+  displayName: string
+  email: string
+}
+
+type Menu = {
+  Breakfast: string
+  Lunch: string
+  Snack: string
+  Dinner: string
+}
+
+type Review = {
+  id: string
+  rating: number
+  date: string
+  comment: string
+}
+
 export default function Dashboard() {
-  const [user, setUser] = useState({ displayName: "", email: "" })
-  const [todaysMenu, setTodaysMenu] = useState({ Breakfast: "", Lunch: "", Snack: "", Dinner: "" })
+  const [user, setUser] = useState<User>({ displayName: "", email: "" })
+  const [todaysMenu, setTodaysMenu] = useState<Menu>({ Breakfast: "", Lunch: "", Snack: "", Dinner: "" })
   const [currentRating, setCurrentRating] = useState(0)
-  const [reviews, setReviews] = useState<{ id: string; rating: number; date: string; comment: string }[]>([])
+  const [reviews, setReviews] = useState<Review[]>([])
 
   useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem("userData") || "{}")
-    const menuData = JSON.parse(localStorage.getItem("menuData") || "{}")
-    const storedRating = localStorage.getItem("quickReviewRating")
-    const today = new Date().toISOString().split('T')[0] // Get today's date in YYYY-MM-DD format
+    try {
+      const userData: User = JSON.parse(localStorage.getItem("userData") || "{}")
+      const menuData = JSON.parse(localStorage.getItem("menuData") || "{}")
+      const storedRating = localStorage.getItem("quickReviewRating")
+      const storedReviews: Review[] = JSON.parse(localStorage.getItem("reviews") || "[]")
+      
+      const today = new Date().toISOString().split('T')[0] // YYYY-MM-DD format
+      const monthKey = today.slice(0, 7) // YYYY-MM format
 
-    // Example: Fetch reviews from localStorage or API
-    const storedReviews = JSON.parse(localStorage.getItem("reviews") || "[]")
-    setReviews(storedReviews)
-    const monthKey = today.slice(0, 7)
-    const todaysMenuData = menuData[monthKey]?.[today] || { Breakfast: "", Lunch: "", Snack: "", Dinner: "" }
-    console.log("menuData:", menuData)
-    console.log("today:", today)
-    console.log("monthKey:", monthKey)
-    console.log("todaysMenuData:", todaysMenuData)
-    setTodaysMenu(todaysMenuData)
+      // Update state safely
+      if (userData.displayName && userData.email) setUser(userData)
+      setReviews(storedReviews)
+      
+      const todaysMenuData = menuData?.[monthKey]?.[today] || { Breakfast: "", Lunch: "", Snack: "", Dinner: "" }
+      setTodaysMenu(todaysMenuData)
 
-    if (storedRating) {
-      setCurrentRating(Number(storedRating))
+      if (storedRating) {
+        setCurrentRating(Number(storedRating))
+      }
+    } catch (error) {
+      console.error("Error loading localStorage data:", error)
     }
   }, [])
 
@@ -42,65 +64,66 @@ export default function Dashboard() {
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold">Welcome to Mess++</h1>
+      
+      {/* User Profile Card */}
       <Card>
         <CardHeader>
           <CardTitle>Your Profile</CardTitle>
         </CardHeader>
         <CardContent>
-          <p>
-            <strong>Name: Shubhrajyoti Ghose Biswas </strong>
-          </p>
-          <p>
-            <strong>Email: shubhrajyoti.23bce7261@vitapstudent.ac.in </strong> 
-          </p>
+          <p><strong>Name: </strong>{user.displayName || "N/A"}</p>
+          <p><strong>Email: </strong>{user.email || "N/A"}</p>
         </CardContent>
       </Card>
+
+      {/* Today's Menu Card */}
       <Card>
         <CardHeader>
           <CardTitle>Today's Menu</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-2">
-            <p>
-              <strong>Breakfast: Poori, Potato Masala Bhaji, Rava Upa, Groundnut Chutney, bread + Butter + Jam, Tea, Cofee Powder, Milk, NV-Boiled Egg </strong>
-            </p>
-            <p>
-              <strong>Lunch: Phulka, Mix Veg Sambar, Kadi Pakoda, Ivy Gourd Fry, Chilli Potato (Alternative), Papula Podi + Ghee, Carrot and Beans Poriyal, White Rice, Rasam, Papad, Lemon Water, Salad, Carrot </strong>
-            </p>
-            <p>
-              <strong>Snack: Papdi Chat, Tea, Coffee </strong>
-            </p>
-            <p>
-              <strong>Dinner: Phulka, Kaakarakaya Fry (Bitter Gourd Oil Fry), Amaranthus Dal, Veg Mix Curry, Sambar, Curd, White Rice, Green Chilly Pickle, Milk, Coffee Powder, Fruits  </strong>
-            </p>
+            {Object.entries(todaysMenu).map(([meal, description]) => (
+              <p key={meal}>
+                <strong>{meal}: </strong> {description || "Not Available"}
+              </p>
+            ))}
           </div>
         </CardContent>
       </Card>
+
+      {/* Monthly Menu Component */}
       <MonthlyMenu />
+
+      {/* Recent Reviews Card */}
       <Card>
-              <CardHeader>
-                <CardTitle>Recent Reviews</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {reviews.length === 0 ? (
-                  <p>No reviews yet. Be the first to review!</p>
-                ) : (
-                  <div className="space-y-4">
-                    {reviews.map((review) => (
-                      <div key={review.id} className="border-b pb-4">
-                        <div className="flex items-center space-x-2">
-                          {[1, 2, 3, 4, 5].map((star) => (
-                            <Star key={star} className={`h-4 w-4 ${star <= review.rating ? "fill-primary" : ""}`} />
-                          ))}
-                          <span className="text-sm text-muted-foreground">{review.date}</span>
-                        </div>
-                        <p className="mt-2">{review.comment}</p>
-                      </div>
+        <CardHeader>
+          <CardTitle>Recent Reviews</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {reviews.length === 0 ? (
+            <p>No reviews yet. Be the first to review!</p>
+          ) : (
+            <div className="space-y-4">
+              {reviews.map((review) => (
+                <div key={review.id} className="border-b pb-4">
+                  <div className="flex items-center space-x-2">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star 
+                        key={star} 
+                        className={`h-4 w-4 ${star <= review.rating ? "fill-primary text-primary" : "text-muted-foreground"}`}
+                        fill="currentColor"
+                      />
                     ))}
+                    <span className="text-sm text-muted-foreground">{review.date}</span>
                   </div>
-                )}
-              </CardContent>
-            </Card>
+                  <p className="mt-2">{review.comment}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
     </div>
   )
 }
