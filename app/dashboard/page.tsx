@@ -62,16 +62,16 @@ export default function Dashboard() {
         <CardContent>
           <div className="space-y-2">
             <p>
-              <strong>Breakfast:</strong> {todaysMenu.Breakfast}
+              <strong>Breakfast: Poori, Potato Masala Bhaji, Rava Upa, Groundnut Chutney, bread + Butter + Jam, Tea, Cofee Powder, Milk, NV-Boiled Egg </strong>
             </p>
             <p>
-              <strong>Lunch:</strong> {todaysMenu.Lunch}
+              <strong>Lunch: Phulka, Mix Veg Sambar, Kadi Pakoda, Ivy Gourd Fry, Chilli Potato (Alternative), Papula Podi + Ghee, Carrot and Beans Poriyal, White Rice, Rasam, Papad, Lemon Water, Salad, Carrot </strong>
             </p>
             <p>
-              <strong>Snack:</strong> {todaysMenu.Snack}
+              <strong>Snack: Papdi Chat, Tea, Coffee </strong>
             </p>
             <p>
-              <strong>Dinner:</strong> {todaysMenu.Dinner}
+              <strong>Dinner: Phulka, Kaakarakaya Fry (Bitter Gourd Oil Fry), Amaranthus Dal, Veg Mix Curry, Sambar, Curd, White Rice, Green Chilly Pickle, Milk, Coffee Powder, Fruits  </strong>
             </p>
           </div>
         </CardContent>
