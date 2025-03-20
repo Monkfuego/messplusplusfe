@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -8,29 +8,44 @@ import Image from "next/image"
 
 export default function LoginPage() {
   const router = useRouter()
+  const [bgImage, setBgImage] = useState("")
 
   useEffect(() => {
     // Check if user is already logged in
     const token = localStorage.getItem("authToken")
-    if (token) {
-      router.push("/dashboard")
+    const email = localStorage.getItem("userEmail")
+    const name = localStorage.getItem("userName")
+    if (token && email && name) {
+      router.push(`/dashboard?email=${email}&name=${name}`)
     }
+
+    // Randomly select a background image
+    const images = [
+     "https://media.discordapp.net/attachments/940932508571287563/1352167155726024784/mh5mess.jpg?ex=67dd074b&is=67dbb5cb&hm=4652ea1787ab7f1d072583ce254efe03855a19cc66d78eeb2b9d72eb3a1484f1&=&format=webp&width=1066&height=800",
+     "https://media.discordapp.net/attachments/940932508571287563/1352167156011503656/MH5mess1.jpg?ex=67dd074c&is=67dbb5cc&hm=1dd76eba3d440a14503825837c906074198d082a797446f4157b9e8bf8a397bf&=&format=webp&width=1063&height=800",
+     "https://media.discordapp.net/attachments/940932508571287563/1352167156472746014/MH4mess.jpg?ex=67dd074c&is=67dbb5cc&hm=196c9cdbb51bc61dd38ef065941631473d5c8cc74be12c84473d1126c9ad2950&=&format=webp&width=450&height=800",
+     "https://media.discordapp.net/attachments/940932508571287563/1352167156820742184/mh4mess1.jpg?ex=67dd074c&is=67dbb5cc&hm=de24bcf37ff1b041fe5061ff0222c91b5bfb1bc0bcd4ba76762d58518c526d4d&=&format=webp&width=450&height=800"
+    ]
+    const randomImage = images[Math.floor(Math.random() * images.length)]
+    setBgImage(randomImage)
   }, [router])
 
   const handleGoogleLogin = () => {
     window.location.href = "https://mess-plus-plus-backend.onrender.com/auth/google"
   }
 
-  // This function would be called by the OAuth callback
-  const handleLoginSuccess = (token: string) => {
-    localStorage.setItem("authToken", token)
-    router.push("/dashboard")
-  }
-
   return (
     <div className="container relative min-h-[calc(100vh-4rem)] flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
       <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
-        <div className="absolute inset-0 bg-zinc-900" />
+        <div className="absolute inset-0">
+          <Image 
+            src={bgImage}
+            alt="Background"
+            layout="fill"
+            objectFit="cover"
+            className="opacity-50"
+          />
+        </div>
         <div className="relative z-20 flex items-center text-lg font-medium">
           <Image
             src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mircha%20unclear-b3ezX961kEWOTcdUF6lIQCeBNpiC8M.png"
@@ -40,7 +55,7 @@ export default function LoginPage() {
             className="dark:invert"
           />
         </div>
-        <div className="relative z-20 mt-auto">
+        <div className="relative z-20 mt-auto bg-black/50 p-4 rounded-lg">
           <blockquote className="space-y-2">
             <p className="text-lg">
               "Streamline your dining experience with smart meal planning and nutritional insights."
@@ -85,4 +100,3 @@ export default function LoginPage() {
     </div>
   )
 }
-
