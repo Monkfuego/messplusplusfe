@@ -7,14 +7,37 @@ import { Star } from "lucide-react"
 import { MonthlyMenu } from "@/components/monthly-menu"
 
 export default function Dashboard() {
-  const [user, setUser] = useState({ name: "", email: "" })
-  const [todaysMenu, setTodaysMenu] = useState({ breakfast: "", lunch: "", dinner: "" })
+  const [user, setUser] = useState({ displayName: "", email: "" })
+  const [todaysMenu, setTodaysMenu] = useState({ Breakfast: "", Lunch: "", Snack: "", Dinner: "" })
+  const [currentRating, setCurrentRating] = useState(0)
+  const [reviews, setReviews] = useState<{ id: string; rating: number; date: string; comment: string }[]>([])
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userData") || "{}")
     const menuData = JSON.parse(localStorage.getItem("menuData") || "{}")
-    setTodaysMenu(menuData)
+    const storedRating = localStorage.getItem("quickReviewRating")
+    const today = new Date().toISOString().split('T')[0] // Get today's date in YYYY-MM-DD format
+
+    // Example: Fetch reviews from localStorage or API
+    const storedReviews = JSON.parse(localStorage.getItem("reviews") || "[]")
+    setReviews(storedReviews)
+    const monthKey = today.slice(0, 7)
+    const todaysMenuData = menuData[monthKey]?.[today] || { Breakfast: "", Lunch: "", Snack: "", Dinner: "" }
+    console.log("menuData:", menuData)
+    console.log("today:", today)
+    console.log("monthKey:", monthKey)
+    console.log("todaysMenuData:", todaysMenuData)
+    setTodaysMenu(todaysMenuData)
+
+    if (storedRating) {
+      setCurrentRating(Number(storedRating))
+    }
   }, [])
+
+  const handleRating = (rating: number) => {
+    setCurrentRating(rating)
+    localStorage.setItem("quickReviewRating", rating.toString())
+  }
 
   return (
     <div className="space-y-6">
@@ -25,10 +48,10 @@ export default function Dashboard() {
         </CardHeader>
         <CardContent>
           <p>
-            <strong>Name:</strong> {user.name}
+            <strong>Name: Shubhrajyoti Ghose Biswas </strong>
           </p>
           <p>
-            <strong>Email:</strong> {user.email}
+            <strong>Email: shubhrajyoti.23bce7261@vitapstudent.ac.in </strong> 
           </p>
         </CardContent>
       </Card>
@@ -39,33 +62,45 @@ export default function Dashboard() {
         <CardContent>
           <div className="space-y-2">
             <p>
-              <strong>Breakfast:</strong> {todaysMenu.breakfast}
+              <strong>Breakfast:</strong> {todaysMenu.Breakfast}
             </p>
             <p>
-              <strong>Lunch:</strong> {todaysMenu.lunch}
+              <strong>Lunch:</strong> {todaysMenu.Lunch}
             </p>
             <p>
-              <strong>Dinner:</strong> {todaysMenu.dinner}
+              <strong>Snack:</strong> {todaysMenu.Snack}
             </p>
-          </div>
-        </CardContent>
-      </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle>Quick Review</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex space-x-2">
-            {[1, 2, 3, 4, 5].map((rating) => (
-              <Button key={rating}>
-                <Star className={`h-4 w-4 ${rating <= 3 ? "fill-primary" : ""}`} />
-              </Button>
-            ))}
+            <p>
+              <strong>Dinner:</strong> {todaysMenu.Dinner}
+            </p>
           </div>
         </CardContent>
       </Card>
       <MonthlyMenu />
+      <Card>
+              <CardHeader>
+                <CardTitle>Recent Reviews</CardTitle>
+              </CardHeader>
+              <CardContent>
+                {reviews.length === 0 ? (
+                  <p>No reviews yet. Be the first to review!</p>
+                ) : (
+                  <div className="space-y-4">
+                    {reviews.map((review) => (
+                      <div key={review.id} className="border-b pb-4">
+                        <div className="flex items-center space-x-2">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <Star key={star} className={`h-4 w-4 ${star <= review.rating ? "fill-primary" : ""}`} />
+                          ))}
+                          <span className="text-sm text-muted-foreground">{review.date}</span>
+                        </div>
+                        <p className="mt-2">{review.comment}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
     </div>
   )
 }
-
