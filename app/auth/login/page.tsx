@@ -21,10 +21,10 @@ export default function LoginPage() {
 
     // Randomly select a background image
     const images = [
-     "https://media.discordapp.net/attachments/940932508571287563/1352167155726024784/mh5mess.jpg?ex=67dd074b&is=67dbb5cb&hm=4652ea1787ab7f1d072583ce254efe03855a19cc66d78eeb2b9d72eb3a1484f1&=&format=webp&width=1066&height=800",
-     "https://media.discordapp.net/attachments/940932508571287563/1352167156011503656/MH5mess1.jpg?ex=67dd074c&is=67dbb5cc&hm=1dd76eba3d440a14503825837c906074198d082a797446f4157b9e8bf8a397bf&=&format=webp&width=1063&height=800",
-     "https://media.discordapp.net/attachments/940932508571287563/1352167156472746014/MH4mess.jpg?ex=67dd074c&is=67dbb5cc&hm=196c9cdbb51bc61dd38ef065941631473d5c8cc74be12c84473d1126c9ad2950&=&format=webp&width=450&height=800",
-     "https://media.discordapp.net/attachments/940932508571287563/1352167156820742184/mh4mess1.jpg?ex=67dd074c&is=67dbb5cc&hm=de24bcf37ff1b041fe5061ff0222c91b5bfb1bc0bcd4ba76762d58518c526d4d&=&format=webp&width=450&height=800"
+     "https://media.discordapp.net/attachments/940932508571287563/1352167156820742184/mh4mess1.jpg?ex=67e4478c&is=67e2f60c&hm=05576a00b76f2abae21c853255ba2c8a0ad038b254ea940f3e52f49c586f1b61&=&format=webp&width=450&height=800",
+     "https://media.discordapp.net/attachments/940932508571287563/1352167156472746014/MH4mess.jpg?ex=67e4478c&is=67e2f60c&hm=1bd90f50559b2f577850b224dd7012b953c5789474eb5552e4b65494db214f77&=&format=webp&width=450&height=800",
+     "https://media.discordapp.net/attachments/940932508571287563/1352167156011503656/MH5mess1.jpg?ex=67e4478c&is=67e2f60c&hm=e5d8ef0f631ccff88372c6c137a9a82a0c57f612f17fe50fa69f5e83d8a5eee3&=&format=webp&width=1063&height=800",
+     "https://media.discordapp.net/attachments/940932508571287563/1352167155726024784/mh5mess.jpg?ex=67e4478b&is=67e2f60b&hm=36b85b8cacfd76a26ff001bc9c71086ef963a7420d1d8cbf2ab255b7b0e0765d&=&format=webp&width=1066&height=800"
     ]
     const randomImage = images[Math.floor(Math.random() * images.length)]
     setBgImage(randomImage)
